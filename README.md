@@ -1,40 +1,74 @@
-# Artist to AI Generated Style
+# Music Style Generator
 
-## INSTALL AND USE:
+A web application that generates musical style descriptions for artists using AI. Supports multiple AI providers including OpenAI and OpenRouter.
+
+## Features
+
+- Generate concise musical style descriptions for any artist
+- Support for multiple AI providers (OpenAI, OpenRouter)
+- Dynamic model selection based on provider
+- Secure API key management
+- Copy-to-clipboard functionality
+
+## Installation
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Clone the repository
 git clone https://github.com/rustyorb/music-styles-generator.git
 
-# Step 2: Navigate to the project directory.
+# Navigate to the project directory
 cd music-styles-generator
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the development server
 npm run dev
 
-# URL
+# Access the application
 http://localhost:8080/
-
-# CONFIG
-
-GO TO CONFIG COG WHEEL AND INPUT OPENAI API KEY AND SAVE.
-
-ENTER ARTIST NAME AND PRESS GENERATE
-
 ```
 
+## Configuration
 
-## What technologies are used for this project?
+1. Click the settings icon (⚙️) in the top-right corner
+2. Select a provider (OpenAI or OpenRouter)
+3. Enter your API key
+4. For OpenRouter or custom providers, you can optionally specify a custom base URL
 
-This project is built with .
+### Provider Setup
+
+#### OpenAI
+1. Get your API key from [OpenAI Platform](https://platform.openai.com/api-keys)
+2. Select "OpenAI" as the provider
+3. Enter your API key (starts with 'sk-')
+
+#### OpenRouter
+1. Get your API key from [OpenRouter](https://openrouter.ai/keys)
+2. Select "OpenRouter" as the provider
+3. Enter your API key
+4. Optionally customize the base URL if needed
+
+## Usage
+
+1. Configure your preferred AI provider in settings
+2. Select an AI model from the dropdown
+3. Enter an artist name
+4. Click "Generate Style Description"
+5. Click the copy icon to copy the result
+
+## Technologies
 
 - Vite
 - TypeScript
 - React
 - shadcn-ui
 - Tailwind CSS
+- OpenAI API
+- OpenRouter API
 
+## Security
 
+- API keys are stored securely in browser localStorage
+- No API keys are exposed in the code or version control
+- Support for custom base URLs for self-hosted models
