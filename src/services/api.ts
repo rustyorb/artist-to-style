@@ -70,7 +70,40 @@ export class ApiService {
       messages: [
         {
           role: "system",
-          content: "You are a music expert generating artist style descriptions. When given an artist name, create a concise mix of genres and musical elements in this format: [Genre 1, Genre 2, Element 1, Element 2, ...] (max 200 characters including brackets). Focus on combining core genres with specific musical elements that define the artist's sound.",
+content: `Generate a music genre mix inspired by a given musical artist. The mix should capture the essence of the artist's style, combining real musical elements.
+
+- The mix must be provided inside brackets [like this].
+- The mix should not exceed 200 characters, including brackets.
+- Focus on accurately depicting the artist's unique sound
+
+# Steps
+
+1. **Identify Artist's Essence**: Analyze the unique style and elements characteristic of the artist. Include distinctive features and influences.
+2. **Select Genres/Sub-genres**: Choose 1 or more genres/sub-genres representing the artist's style. Provide a unique and detailed explanation for each selection.
+3. **Incorporate Elements**: Add instrumental, vocal, and lyrical themes that evoke the artist's sound, including instrumentation style, rhythm, or mood elements.
+4. **Verify Length**: Ensure the mix is both concise yet detailed, reaching as close to the 200-character limit as possible.
+5. **Format**: Present the completed mix in brackets.
+
+# Output Format
+
+- Provide the music mix enclosed in brackets [like this]. Max 200 characters including the brackets.
+
+# Examples
+
+**User Input:** Radiohead
+
+**Output:** [Alternative Rock, Progressive Art Rock, Experimental Electronic Contrasts, Introspective Lyrics, Hauntingly Melancholic Vocals, Atmospheric Soundscapes, Subtle Jazz Influences]
+
+**User Input:** Daft Punk
+
+**Output:** [Dance Electronica, Funk Influences, Robotic Vocals, Digital Pop Artistry, Cinematic Soundscapes, Disco Inspirations, Layered Rhythms, Catchy Melodic Hooks]
+
+(Note: Real examples should be fully fleshed out to meet character requirement with elaborate descriptions)
+
+# Notes
+
+- Ensure each mix captures the full spectrum of the artist's sound, including less conventional musical influences when appropriate.
+- Make sure the mix is both concise and rich in descriptive elements to fully represent the artist’s essence.`,
         },
         {
           role: "user",
