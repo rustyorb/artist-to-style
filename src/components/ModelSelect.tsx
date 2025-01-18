@@ -57,15 +57,27 @@ export function ModelSelect({ provider, value, onChange }: ModelSelectProps) {
     <Select value={value} onValueChange={onChange}>
       <SelectTrigger className="w-full">
         <SelectValue
-          placeholder={loading ? "Loading models..." : "Select a model"}
+          placeholder={
+            loading
+              ? "Loading models..."
+              : models.length > 0
+              ? "Select a model"
+              : "No models available"
+          }
         />
       </SelectTrigger>
       <SelectContent>
-        {models.map((model) => (
-          <SelectItem key={model.id} value={model.id}>
-            {model.name}
-          </SelectItem>
-        ))}
+        {models.length > 0 ? (
+          models.map((model) => (
+            <SelectItem key={model.id} value={model.id}>
+              {model.name}
+            </SelectItem>
+          ))
+        ) : (
+          <div className="p-2 text-sm text-muted-foreground">
+            No models available for this provider
+          </div>
+        )}
       </SelectContent>
     </Select>
   );

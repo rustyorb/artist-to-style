@@ -88,32 +88,50 @@ export function StyleGenerator() {
 
   return (
     <div className="space-y-6 w-full max-w-xl mx-auto">
-      <div className="space-y-2">
-        <div className="grid grid-cols-2 gap-2">
-          <Select value={selectedProvider} onValueChange={setSelectedProvider}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select Provider" />
-            </SelectTrigger>
-            <SelectContent>
-              {apiService.getConfiguredProviders().map((provider) => (
-                <SelectItem key={provider} value={provider}>
-                  {provider.charAt(0).toUpperCase() + provider.slice(1)}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <ModelSelect
-            provider={selectedProvider}
-            value={selectedModel}
-            onChange={setSelectedModel}
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Provider & Model</label>
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <Select
+                value={selectedProvider}
+                onValueChange={(value) => {
+                  setSelectedProvider(value);
+                  setSelectedModel(""); // Reset model when provider changes
+                }}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select Provider" />
+                </SelectTrigger>
+                <SelectContent>
+                  {apiService.getConfiguredProviders().map((provider) => (
+                    <SelectItem key={provider} value={provider}>
+                      {provider.charAt(0).toUpperCase() + provider.slice(1)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            {selectedProvider && (
+              <div>
+                <ModelSelect
+                  provider={selectedProvider}
+                  value={selectedModel}
+                  onChange={setSelectedModel}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Artist Name</label>
+          <Input
+            placeholder="Enter artist name..."
+            value={artist}
+            onChange={(e) => setArtist(e.target.value)}
+            className="text-lg"
           />
         </div>
-        <Input
-          placeholder="Enter artist name..."
-          value={artist}
-          onChange={(e) => setArtist(e.target.value)}
-          className="text-lg"
-        />
         <Button className="w-full" onClick={generateStyle} disabled={loading}>
           {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
           Generate Style Description
