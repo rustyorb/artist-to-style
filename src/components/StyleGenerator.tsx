@@ -1,23 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Copy, Loader2 } from "lucide-react";
+import { ModelSelect } from "@/components/ModelSelect";
+import { ApiService } from "@/services/api";
 
 export function StyleGenerator() {
   const [artist, setArtist] = useState("");
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
+  const [selectedProvider, setSelectedProvider] = useState("");
+  const [selectedModel, setSelectedModel] = useState("");
   const { toast } = useToast();
+  const apiService = new ApiService();
+
+  useEffect(() => {
+    // Get the first configured provider
+    const providers = apiService.getConfiguredProviders();
+    if (providers.length > 0) {
+      setSelectedProvider(providers[0]);
+    }
+  }, []);
 
   const generateStyle = async () => {
-    const apiKey = localStorage.getItem("openai_api_key");
-    if (!apiKey) {
+    if (!selectedProvider) {
       toast({
         variant: "destructive",
-        title: "API Key Required",
-        description: "Please configure your OpenAI API key in settings.",
+        title: "Provider Required",
+        description: "Please configure an API provider in settings.",
+      });
+      return;
+    }
+
+    if (!selectedModel) {
+      toast({
+        variant: "destructive",
+        title: "Model Required",
+        description: "Please select a model.",
       });
       return;
     }
@@ -33,33 +54,12 @@ export function StyleGenerator() {
 
     setLoading(true);
     try {
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model: "gpt-4",
-          messages: [
-            {
-              role: "system",
-              content: "You are a music expert generating artist style descriptions. When given an artist name, create a concise mix of genres and musical elements in this format: [Genre 1, Genre 2, Element 1, Element 2, ...] (max 200 characters including brackets). Focus on combining core genres with specific musical elements that define the artist's sound.",
-            },
-            {
-              role: "user",
-              content: artist,
-            },
-          ],
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("API request failed");
-      }
-
-      const data = await response.json();
-      setResult(data.choices[0].message.content);
+      const response = await apiService.generateCompletion(
+        selectedProvider,
+        selectedModel,
+        artist
+      );
+      setResult(response.choices[0].message.content);
     } catch (error) {
       toast({
         variant: "destructive",
@@ -88,14 +88,13 @@ export function StyleGenerator() {
           onChange={(e) => setArtist(e.target.value)}
           className="text-lg"
         />
-        <Button
-          className="w-full"
-          onClick={generateStyle}
-          disabled={loading}
-        >
-          {loading ? (
-            <Loader2 className="h-4 w-4 animate-spin mr-2" />
-          ) : null}
+        <ModelSelect
+          provider={selectedProvider}
+          value={selectedModel}
+          onChange={setSelectedModel}
+        />
+        <Button className="w-full" onClick={generateStyle} disabled={loading}>
+          {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
           Generate Style Description
         </Button>
       </div>
