@@ -93,24 +93,43 @@ export function StyleGenerator() {
           <label className="text-sm font-medium">Provider & Model</label>
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <Select
-                value={selectedProvider}
-                onValueChange={(value) => {
-                  setSelectedProvider(value);
-                  setSelectedModel(""); // Reset model when provider changes
-                }}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select Provider" />
-                </SelectTrigger>
-                <SelectContent>
-                  {apiService.getConfiguredProviders().map((provider) => (
-                    <SelectItem key={provider} value={provider}>
-                      {provider.charAt(0).toUpperCase() + provider.slice(1)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              {apiService.getConfiguredProviders().length > 0 ? (
+                <Select
+                  value={selectedProvider}
+                  onValueChange={(value) => {
+                    setSelectedProvider(value);
+                    setSelectedModel(""); // Reset model when provider changes
+                  }}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Provider" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {apiService.getConfiguredProviders().map((provider) => (
+                      <SelectItem key={provider} value={provider}>
+                        {provider.charAt(0).toUpperCase() + provider.slice(1)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              ) : (
+                <div className="flex items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm text-muted-foreground">
+                  <span>No providers configured</span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() =>
+                      document
+                        .querySelector<HTMLButtonElement>(
+                          '[aria-label="Settings"]'
+                        )
+                        ?.click()
+                    }
+                  >
+                    Configure Now
+                  </Button>
+                </div>
+              )}
             </div>
             {selectedProvider && (
               <div>
