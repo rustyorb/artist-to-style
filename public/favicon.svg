@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+    xmlns="http://www.w3.org/2000/svg">
+    <!-- Background circle -->
+    <circle cx="16" cy="16" r="15" fill="#4F46E5"/>
+
+    <!-- Musical note -->
+    <path d="M22 10L14 12V22C14 23.1046 13.1046 24 12 24C10.8954 24 10 23.1046 10 22C10 20.8954 10.8954 20 12 20C12.3506 20 12.6872 20.0871 13 20.2V14L22 12V10Z" fill="white"/>
+
+    <!-- Style waves -->
+    <path d="M18 16C19.3333 16.6667 20.6667 16.6667 22 16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <path d="M18 19C19.3333 19.6667 20.6667 19.6667 22 19" stroke="white" stroke-width="2" stroke-linecap="round"/>
+</svg>
