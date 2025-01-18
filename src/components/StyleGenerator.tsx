@@ -6,6 +6,13 @@ import { useToast } from "@/hooks/use-toast";
 import { Copy, Loader2 } from "lucide-react";
 import { ModelSelect } from "@/components/ModelSelect";
 import { ApiService } from "@/services/api";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export function StyleGenerator() {
   const [artist, setArtist] = useState("");
@@ -82,16 +89,30 @@ export function StyleGenerator() {
   return (
     <div className="space-y-6 w-full max-w-xl mx-auto">
       <div className="space-y-2">
+        <div className="grid grid-cols-2 gap-2">
+          <Select value={selectedProvider} onValueChange={setSelectedProvider}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select Provider" />
+            </SelectTrigger>
+            <SelectContent>
+              {apiService.getConfiguredProviders().map((provider) => (
+                <SelectItem key={provider} value={provider}>
+                  {provider.charAt(0).toUpperCase() + provider.slice(1)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <ModelSelect
+            provider={selectedProvider}
+            value={selectedModel}
+            onChange={setSelectedModel}
+          />
+        </div>
         <Input
           placeholder="Enter artist name..."
           value={artist}
           onChange={(e) => setArtist(e.target.value)}
           className="text-lg"
-        />
-        <ModelSelect
-          provider={selectedProvider}
-          value={selectedModel}
-          onChange={setSelectedModel}
         />
         <Button className="w-full" onClick={generateStyle} disabled={loading}>
           {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
