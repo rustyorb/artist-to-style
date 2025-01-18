@@ -20,6 +20,10 @@ export function ConfigModal() {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>API Configuration</DialogTitle>
+          <p className="text-sm text-muted-foreground">
+            Configure your AI providers and API keys. Supported providers
+            include OpenAI and OpenRouter.
+          </p>
         </DialogHeader>
         <div className="py-4">
           <ProviderConfig />
