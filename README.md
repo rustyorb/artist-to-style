@@ -1,4 +1,4 @@
-# Music Style Generator
+# Artist to Musical Style via AI LLM Text Generation
 
 A web application that generates musical style descriptions for artists using AI. Supports multiple AI providers including OpenAI and OpenRouter.
 
@@ -14,10 +14,10 @@ A web application that generates musical style descriptions for artists using AI
 
 ```sh
 # Clone the repository
-git clone https://github.com/rustyorb/music-styles-generator.git
+git clone https://github.com/rustyorb/artist-to-style.git
 
 # Navigate to the project directory
-cd music-styles-generator
+cd artist-to-style
 
 # Install dependencies
 npm install
